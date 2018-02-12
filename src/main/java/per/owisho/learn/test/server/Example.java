@@ -2,6 +2,8 @@ package per.owisho.learn.test.server;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -27,6 +29,25 @@ public class Example {
 		File file = new File("C:\\\\Users\\\\owisho\\\\Desktop\\\\1.jpg");
 		ArrayList<Range> ranges = parseRange(request, response, file.length());
 		System.out.println(ranges);
+		response.setContentType("multipart/byteranges; boundary=THIS_STRING_SEPARATES");
+		response.setStatus(206);
+		
+		OutputStream oStream = response.getOutputStream();
+		RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+		if(null!=ranges&&!ranges.isEmpty()) {
+			for(Range range:ranges) {
+				response.setHeader("Content-Range", "bytes "+range.start+"="+range.end+"/"+file.length());
+				response.setHeader("Content-Length", String.valueOf(range.end-range.start+1));
+				randomAccessFile.seek(range.start);
+				for(long i=range.start;i<=range.end;i++) {
+					oStream.write(randomAccessFile.read());
+				}
+				oStream.write("\n\r".getBytes());
+				oStream.flush();
+			}
+		}
+		randomAccessFile.close();
+		oStream.close();
 	}
 	
 	/**

@@ -1,0 +1,30 @@
+<html>
+<head>
+	<script type="text/javascript" >
+		// Check for the various File API support.
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+		  // Great success! All the File APIs are supported.
+		  alert('all support')
+		} else {
+		  alert('The File APIs are not fully supported in this browser.');
+		}
+	</script>
+</head>
+<body>
+	<input type="file" id="files" name="files[]" multiple>
+	<output id="list"></output>
+</body>
+<script>
+	function handleFileSelect(evt){
+		var files = evt.target.files;
+		
+		var output = [];
+		for(var i=0,f;f=files[i];i++){
+			output.push('<li><strong>',escape(f.name),'</strong>(',f.type||'n/a',') -',f.size,f.lastModifiedDate.toLocaleDateString(),'</li>');
+		}
+		document.getElementById('list').innerHTML='<ul>'+output.join('')+'</ul>';
+	}
+	document.getElementById('files').addEventListener('change',handleFileSelect,false);
+</script>
+
+</html>

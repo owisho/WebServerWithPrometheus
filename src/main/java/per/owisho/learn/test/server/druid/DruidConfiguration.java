@@ -1,4 +1,4 @@
-package per.owisho.learn.test.server;
+package per.owisho.learn.test.server.druid;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;

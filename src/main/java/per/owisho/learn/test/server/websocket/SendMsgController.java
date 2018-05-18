@@ -1,4 +1,4 @@
-package per.owisho.learn.test.server;
+package per.owisho.learn.test.server.websocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

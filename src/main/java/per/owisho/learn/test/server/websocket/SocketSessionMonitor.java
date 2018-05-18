@@ -1,4 +1,4 @@
-package per.owisho.learn.test.server;
+package per.owisho.learn.test.server.websocket;
 
 import java.util.ArrayList;
 import java.util.List;
